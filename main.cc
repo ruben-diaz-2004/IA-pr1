@@ -27,4 +27,7 @@ int main(int argc, char* argv[]) {
   Arbol arbol(fichero_de_entrada, origen, destino);
   // Ejecutar amplitud | profundidad
   arbol.PrintCostes();
+  arbol.RecorridoAmplitud();
+
+  return 0;
 }

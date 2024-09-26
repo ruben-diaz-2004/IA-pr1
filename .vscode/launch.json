@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/NoInformadas",
-            "args": [""],
+            "args": ["Grafo1.txt"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
