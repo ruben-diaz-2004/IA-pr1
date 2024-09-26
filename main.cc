@@ -12,10 +12,10 @@
 
 #include <iostream>
 #include "fstream"
+#include "arbol.h"
 
-int main() {
-  std::ifstream fichero_de_entrada;
-  // Recoger el fichero por parámetros
+int main(int argc, char* argv[]) {
+  std::fstream fichero_de_entrada{argv[1]};
 
   int origen, destino;
   std::cout << "Introduce el nodo de origen: \n";
@@ -24,7 +24,7 @@ int main() {
   std::cin >> destino;
 
   // Llamamos a la clase árbol
-
+  Arbol arbol(fichero_de_entrada, origen, destino);
   // Ejecutar amplitud | profundidad
-
+  arbol.PrintCostes();
 }

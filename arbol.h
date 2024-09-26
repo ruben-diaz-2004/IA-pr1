@@ -12,6 +12,7 @@
 class Arbol {
 public:
   Arbol(std::fstream& fichero_entrada, int origen, int destino);
+  void PrintCostes();
 private:
   Nodo* raiz_;
   int origen_;
