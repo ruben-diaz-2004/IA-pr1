@@ -97,6 +97,41 @@ void Arbol::RecorridoAmplitud() {
 }
 
 
+void Arbol::RecorridoProfundidad() {
+  std::stack<Nodo*> pila_nodos;
+  pila_nodos.emplace(raiz_);
+  bool solucion = false;
+  int identificador_actual{0};
+  Nodo* nodo_actual = nullptr;
+  while (!pila_nodos.empty() && solucion == false) {
+    nodo_actual = pila_nodos.top();
+    pila_nodos.pop();
+    nodos_visitados_.emplace_back(nodo_actual->GetIdentificador());
+    identificador_actual = nodo_actual->GetIdentificador();
+    if (identificador_actual == destino_) {
+      solucion = true;
+    } else {
+      for (int i{numero_de_nodos_-1}; i >= 0; --i) {
+        if (matriz_costes_[identificador_actual-1][i] != -1) {
+          if (!CompruebaRama(nodo_actual, i+1)) { // Comprobar que no pertenece a la rama
+            Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual-1][i], nodo_actual); // Comprobar que el identificador es correcto
+            pila_nodos.emplace(nodo_nuevo);
+            nodos_generados_.emplace_back(i+1);
+          }
+        }
+      }
+    }
+    std::cout << "Iteración: " << iteracion_ << std::endl;
+    iteracion_++;
+    PrintGenerados();
+    PrintVisitados();
+    std::cout << "--------------------------------------------\n";
+  }
+  if (!solucion) std::cout << "No se ha encontrado solución\n";
+  else ImprimeCamino(nodo_actual);
+}
+
+
 bool Arbol::CompruebaRama(Nodo* nodo, int identificador) {
   Nodo* nodo_auxiliar = nodo;
   while (nodo_auxiliar != nullptr) {
