@@ -22,7 +22,6 @@ Arbol::Arbol(std::fstream& fichero_entrada, int origen, int destino) : origen_{o
       matriz_costes_[i].push_back(0);
     }
   }
-  PrintCostes();
 
   double auxiliar{0};
   for (int i{0}; i < numero_de_nodos; ++i) {
@@ -35,6 +34,19 @@ Arbol::Arbol(std::fstream& fichero_entrada, int origen, int destino) : origen_{o
   }
 
   raiz_ = new Nodo(origen_, 0);
+  nodos_generados_.emplace_back(origen_);
+  iteracion_ = 1;
+  std::cout << "--------------------------------------------\n";
+  std::cout << "Número de nodos del grafo: " << numero_de_nodos << std::endl;
+  std::cout << "Número de aristas del grafo: " << numero_de_aristas << std::endl;
+  std::cout << "Vértice de origen: " << origen_ << std::endl;
+  std::cout << "Vértice de destino: " << destino_ << std::endl;
+  std::cout << "--------------------------------------------\n";
+  std::cout << "Iteración: " << iteracion_ << std::endl;
+  iteracion_++;
+  PrintGenerados();
+  PrintVisitados();
+  std::cout << "--------------------------------------------\n";
 }
 
 
@@ -55,26 +67,33 @@ void Arbol::RecorridoAmplitud() {
   cola_nodos.emplace(raiz_);
   bool solucion = false;
   int identificador_actual{0};
+  Nodo* nodo_actual = nullptr;
   while (!cola_nodos.empty() && solucion == false) {
-  Nodo* nodo_actual = cola_nodos.front();
+  nodo_actual = cola_nodos.front();
   cola_nodos.pop();
+  nodos_visitados_.emplace_back(nodo_actual->GetIdentificador());
   identificador_actual = nodo_actual->GetIdentificador();
   if (identificador_actual == destino_) {
     solucion = true;
-    std::cout << "Se ha encontrado una solución: \n";
-    ImprimeCamino(nodo_actual);
-    // Imprimir camino y calcular coste
   } else {
     for (int i{0}; i < numero_de_nodos_; ++i) {
-      if (matriz_costes_[identificador_actual][i] != -1) {  
+      if (matriz_costes_[identificador_actual-1][i] != -1) {  
         if (!CompruebaRama(nodo_actual, i+1)) { // Comprobar que no pertenece a la rama
-          Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual][i], nodo_actual); // Comprobar que el identificador es correcto
+          Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual-1][i], nodo_actual); // Comprobar que el identificador es correcto
           cola_nodos.emplace(nodo_nuevo);
+          nodos_generados_.emplace_back(i+1);
         }
       }
     }
   }
+  std::cout << "Iteración: " << iteracion_ << std::endl;
+  iteracion_++;
+  PrintGenerados();
+  PrintVisitados();
+  std::cout << "--------------------------------------------\n";
   }
+  if (!solucion) std::cout << "No se ha encontrado solución\n";
+  else ImprimeCamino(nodo_actual);
 }
 
 
@@ -89,19 +108,54 @@ bool Arbol::CompruebaRama(Nodo* nodo, int identificador) {
 
 
 void Arbol::ImprimeCamino(Nodo* nodo) {
+  std::cout << "Camino: ";
+  double coste_total{0};
   Nodo* nodo_auxiliar = nodo;
+
   std::stack<int> camino;
   while (nodo_auxiliar != nullptr) {
+    coste_total += nodo_auxiliar->GetCoste();
     camino.push(nodo_auxiliar->GetIdentificador());
     nodo_auxiliar = nodo_auxiliar->GetPadre();
   }
 
-  for (int i{0}; i < camino.size(); ++i) {
-    std::cout << camino.top() << " - ";
-    camino.pop();
-  }
+  bool running = true;
+  while (running) {
     std::cout << camino.top();
     camino.pop();
+    if (camino.empty()) running = false;
+    else std::cout << " - ";
+  }
 
+  // for (int i{0}; i < camino.size(); ++i) {
+  //   std::cout << camino.top() << " - ";
+  //   camino.pop();
+  // }
+  // std::cout << camino.top();
+  // camino.pop();
+
+  std::cout << std::endl;
+
+  std::cout << "Costo: " << coste_total << std::endl;
+}
+
+
+
+void Arbol::PrintGenerados() {
+  std::cout << "Nodos generados: ";
+  for (int i{0}; i < nodos_generados_.size(); ++i) {
+    std::cout << nodos_generados_[i] << " ";
+  }
+  std::cout << std::endl;
+}
+
+
+
+void Arbol::PrintVisitados() {
+  std::cout << "Nodos inspeccionados: ";
+  for (int i{0}; i < nodos_visitados_.size(); ++i) {
+    std::cout << nodos_visitados_[i] << " ";
+  }
+  if (nodos_visitados_.empty()) std::cout << "-";
   std::cout << std::endl;
 }

@@ -16,12 +16,17 @@ public:
   bool CompruebaRama(Nodo* nodo, int identificador);
   void ImprimeCamino(Nodo* nodo);
   void PrintCostes();
+  void PrintGenerados();
+  void PrintVisitados();
 private:
   Nodo* raiz_;
   int origen_;
   int destino_;
   std::vector<std::vector<double>> matriz_costes_;
   int numero_de_nodos_;
+  std::vector<int> nodos_visitados_;
+  std::vector<int> nodos_generados_;
+  int iteracion_;
 };
 
 
