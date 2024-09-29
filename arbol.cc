@@ -111,39 +111,84 @@ void Arbol::EliminaNodosAmplitud(Nodo* nodo) {
 }
 
 
-void Arbol::RecorridoProfundidad() {
+// void Arbol::RecorridoProfundidad() {
+//   std::stack<Nodo*> pila_nodos;
+//   pila_nodos.emplace(raiz_);
+//   bool solucion = false;
+//   int identificador_actual{0};
+//   Nodo* nodo_actual = nullptr;
+//   while (!pila_nodos.empty() && solucion == false) {
+//     nodo_actual = pila_nodos.top();
+//     pila_nodos.pop();
+//     nodos_visitados_.emplace_back(nodo_actual->GetIdentificador());
+//     identificador_actual = nodo_actual->GetIdentificador();
+//     if (identificador_actual == destino_) {
+//       solucion = true;
+//     } else {
+//       for (int i{numero_de_nodos_-1}; i >= 0; --i) {
+//         if (matriz_costes_[identificador_actual-1][i] != -1) {
+//           if (!CompruebaRama(nodo_actual, i+1)) { // Comprobar que no pertenece a la rama
+//             Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual-1][i], nodo_actual); // Comprobar que el identificador es correcto
+//             pila_nodos.emplace(nodo_nuevo);
+//             nodos_generados_.emplace_back(i+1);
+//           }
+//         }
+//       }
+//     }
+//     std::cout << "Iteración: " << iteracion_ << std::endl;
+//     iteracion_++;
+//     PrintGenerados();
+//     PrintVisitados();
+//     std::cout << "--------------------------------------------\n";
+//   }
+//   if (!solucion) std::cout << "No se ha encontrado solución\n";
+//   else ImprimeCamino(nodo_actual);
+// }
+
+
+
+bool Arbol::RecorridoProfundidad(Nodo* nodo) {
   std::stack<Nodo*> pila_nodos;
-  pila_nodos.emplace(raiz_);
   bool solucion = false;
-  int identificador_actual{0};
-  Nodo* nodo_actual = nullptr;
-  while (!pila_nodos.empty() && solucion == false) {
-    nodo_actual = pila_nodos.top();
-    pila_nodos.pop();
-    nodos_visitados_.emplace_back(nodo_actual->GetIdentificador());
-    identificador_actual = nodo_actual->GetIdentificador();
+  int identificador_actual = nodo->GetIdentificador();
+  nodos_visitados_.emplace_back(identificador_actual);
     if (identificador_actual == destino_) {
       solucion = true;
     } else {
       for (int i{numero_de_nodos_-1}; i >= 0; --i) {
         if (matriz_costes_[identificador_actual-1][i] != -1) {
-          if (!CompruebaRama(nodo_actual, i+1)) { // Comprobar que no pertenece a la rama
-            Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual-1][i], nodo_actual); // Comprobar que el identificador es correcto
+          if (!CompruebaRama(nodo, i+1)) { // Comprobar que no pertenece a la rama
+            Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual-1][i], nodo); // Comprobar que el identificador es correcto
             pila_nodos.emplace(nodo_nuevo);
             nodos_generados_.emplace_back(i+1);
           }
         }
       }
     }
-    std::cout << "Iteración: " << iteracion_ << std::endl;
-    iteracion_++;
-    PrintGenerados();
-    PrintVisitados();
-    std::cout << "--------------------------------------------\n";
+  std::cout << "Iteración: " << iteracion_ << std::endl;
+  iteracion_++;
+  PrintGenerados();
+  PrintVisitados();
+  std::cout << "--------------------------------------------\n";
+  if (solucion) {
+    ImprimeCamino(nodo);
+    return true;
   }
-  if (!solucion) std::cout << "No se ha encontrado solución\n";
-  else ImprimeCamino(nodo_actual);
+  
+  while (!pila_nodos.empty() && !solucion) {
+    Nodo* nodo_actual = pila_nodos.top();
+    pila_nodos.pop();
+    if (RecorridoProfundidad(nodo_actual)) {
+      solucion = true;
+    } else {
+      std::cout << "Borrando nodo: " << nodo_actual->GetIdentificador() << std::endl;
+      delete nodo_actual;
+    }
+  }
+
+  return solucion;
 }
+
 
 
 bool Arbol::CompruebaRama(Nodo* nodo, int identificador) {

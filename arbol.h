@@ -8,18 +8,22 @@
 #include "fstream"
 #include "nodo.h"
 #include "vector"
+#include "stack"
 
 class Arbol {
 public:
   Arbol(std::fstream& fichero_entrada, int origen, int destino);
   void RecorridoAmplitud();
   void EliminaNodosAmplitud(Nodo* nodo);
-  void RecorridoProfundidad();
+  // void RecorridoProfundidad();
+  bool RecorridoProfundidad(Nodo* nodo);
+  bool RecorridoProfundidad(std::stack<Nodo*>& pila_nodos, Nodo* nodo_actual);
   bool CompruebaRama(Nodo* nodo, int identificador);
   void ImprimeCamino(Nodo* nodo);
   void PrintCostes();
   void PrintGenerados();
   void PrintVisitados();
+  Nodo* GetRaiz() { return raiz_; }
 private:
   Nodo* raiz_;
   int origen_;

@@ -26,7 +26,8 @@ int main(int argc, char* argv[]) {
   // Llamamos a la clase árbol
   Arbol arbol(fichero_de_entrada, origen, destino);
   // Ejecutar amplitud | profundidad
-  arbol.RecorridoAmplitud();
+  // arbol.RecorridoAmplitud();
+  arbol.RecorridoProfundidad(arbol.GetRaiz());
   // arbol.RecorridoProfundidad();
 
   return 0;
