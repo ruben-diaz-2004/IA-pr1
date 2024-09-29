@@ -12,6 +12,7 @@ public:
   int GetIdentificador() const { return identificador_; }
   double GetCoste() const { return coste_; }
   Nodo* GetPadre() const { return padre_; }
+  void SetPadre(Nodo* padre) { padre_ = padre; }
 private:
   int identificador_;
   double coste_;

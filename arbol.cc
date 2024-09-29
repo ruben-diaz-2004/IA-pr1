@@ -94,6 +94,20 @@ void Arbol::RecorridoAmplitud() {
   }
   if (!solucion) std::cout << "No se ha encontrado solución\n";
   else ImprimeCamino(nodo_actual);
+  EliminaNodosAmplitud(nodo_actual);
+  while (!cola_nodos.empty()) {
+    Nodo* nodo_auxiliar = cola_nodos.front();
+    cola_nodos.pop();
+    EliminaNodosAmplitud(nodo_auxiliar);
+  }
+}
+
+
+void Arbol::EliminaNodosAmplitud(Nodo* nodo) {
+    if (nodo->GetPadre() != nullptr) {
+      EliminaNodosAmplitud(nodo->GetPadre());
+      nodo->SetPadre(nullptr);
+    }
 }
 
 

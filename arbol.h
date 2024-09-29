@@ -13,6 +13,7 @@ class Arbol {
 public:
   Arbol(std::fstream& fichero_entrada, int origen, int destino);
   void RecorridoAmplitud();
+  void EliminaNodosAmplitud(Nodo* nodo);
   void RecorridoProfundidad();
   bool CompruebaRama(Nodo* nodo, int identificador);
   void ImprimeCamino(Nodo* nodo);
