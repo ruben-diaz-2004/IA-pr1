@@ -34,6 +34,8 @@ private:
   std::vector<int> nodos_visitados_;
   std::vector<int> nodos_generados_;
   int iteracion_;
+  // Imprimimos la salida por un fichero
+  std::fstream fichero_salida{"salida.txt", std::ios::out};
 };
 
 

@@ -36,17 +36,17 @@ Arbol::Arbol(std::fstream& fichero_entrada, int origen, int destino) : origen_{o
   raiz_ = new Nodo(origen_, 0);
   nodos_generados_.emplace_back(origen_);
   iteracion_ = 1;
-  std::cout << "--------------------------------------------\n";
-  std::cout << "Número de nodos del grafo: " << numero_de_nodos << std::endl;
-  std::cout << "Número de aristas del grafo: " << numero_de_aristas << std::endl;
-  std::cout << "Vértice de origen: " << origen_ << std::endl;
-  std::cout << "Vértice de destino: " << destino_ << std::endl;
-  std::cout << "--------------------------------------------\n";
-  std::cout << "Iteración: " << iteracion_ << std::endl;
+  fichero_salida << "--------------------------------------------\n";
+  fichero_salida << "Número de nodos del grafo: " << numero_de_nodos << std::endl;
+  fichero_salida << "Número de aristas del grafo: " << numero_de_aristas << std::endl;
+  fichero_salida << "Vértice de origen: " << origen_ << std::endl;
+  fichero_salida << "Vértice de destino: " << destino_ << std::endl;
+  fichero_salida << "--------------------------------------------\n";
+  fichero_salida << "Iteración: " << iteracion_ << std::endl;
   iteracion_++;
   PrintGenerados();
   PrintVisitados();
-  std::cout << "--------------------------------------------\n";
+  fichero_salida << "--------------------------------------------\n";
 }
 
 
@@ -108,13 +108,13 @@ void Arbol::RecorridoAmplitud() {
       }
     }
   }
-  std::cout << "Iteración: " << iteracion_ << std::endl;
+  fichero_salida << "Iteración: " << iteracion_ << std::endl;
   iteracion_++;
   PrintGenerados();
   PrintVisitados();
-  std::cout << "--------------------------------------------\n";
+  fichero_salida << "--------------------------------------------\n";
   }
-  if (!solucion) std::cout << "No se ha encontrado solución\n";
+  if (!solucion) fichero_salida << "No se ha encontrado solución\n";
   else ImprimeCamino(nodo_actual);
   // EliminaNodosAmplitud(nodo_actual);
   // while (!cola_nodos.empty()) {
@@ -188,11 +188,11 @@ bool Arbol::RecorridoProfundidad(Nodo* nodo) {
         }
       }
     }
-  std::cout << "Iteración: " << iteracion_ << std::endl;
+  fichero_salida << "Iteración: " << iteracion_ << std::endl;
   iteracion_++;
   PrintGenerados();
   PrintVisitados();
-  std::cout << "--------------------------------------------\n";
+  fichero_salida << "--------------------------------------------\n";
   if (solucion) {
     ImprimeCamino(nodo);
     return true;
@@ -204,7 +204,7 @@ bool Arbol::RecorridoProfundidad(Nodo* nodo) {
     if (RecorridoProfundidad(nodo_actual)) {
       solucion = true;
     } else {
-      std::cout << "Borrando nodo: " << nodo_actual->GetIdentificador() << std::endl;
+      // std::cout << "Borrando nodo: " << nodo_actual->GetIdentificador() << std::endl;
       delete nodo_actual;
     }
   }
@@ -225,7 +225,7 @@ bool Arbol::CompruebaRama(Nodo* nodo, int identificador) {
 
 
 void Arbol::ImprimeCamino(Nodo* nodo) {
-  std::cout << "Camino: ";
+  fichero_salida << "Camino: ";
   double coste_total{0};
   Nodo* nodo_auxiliar = nodo;
 
@@ -238,10 +238,10 @@ void Arbol::ImprimeCamino(Nodo* nodo) {
 
   bool running = true;
   while (running) {
-    std::cout << camino.top();
+    fichero_salida << camino.top();
     camino.pop();
     if (camino.empty()) running = false;
-    else std::cout << " - ";
+    else fichero_salida << " - ";
   }
 
   // for (int i{0}; i < camino.size(); ++i) {
@@ -251,28 +251,28 @@ void Arbol::ImprimeCamino(Nodo* nodo) {
   // std::cout << camino.top();
   // camino.pop();
 
-  std::cout << std::endl;
+  fichero_salida << std::endl;
 
-  std::cout << "Costo: " << coste_total << std::endl;
+  fichero_salida << "Costo: " << coste_total << std::endl;
 }
 
 
 
 void Arbol::PrintGenerados() {
-  std::cout << "Nodos generados: ";
+  fichero_salida << "Nodos generados: ";
   for (int i{0}; i < nodos_generados_.size(); ++i) {
-    std::cout << nodos_generados_[i] << " ";
+    fichero_salida << nodos_generados_[i] << " ";
   }
-  std::cout << std::endl;
+  fichero_salida << std::endl;
 }
 
 
 
 void Arbol::PrintVisitados() {
-  std::cout << "Nodos inspeccionados: ";
+  fichero_salida << "Nodos inspeccionados: ";
   for (int i{0}; i < nodos_visitados_.size(); ++i) {
-    std::cout << nodos_visitados_[i] << " ";
+    fichero_salida << nodos_visitados_[i] << " ";
   }
-  if (nodos_visitados_.empty()) std::cout << "-";
-  std::cout << std::endl;
+  if (nodos_visitados_.empty()) fichero_salida << "-";
+  fichero_salida << std::endl;
 }
