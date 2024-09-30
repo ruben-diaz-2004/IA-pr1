@@ -26,8 +26,18 @@ int main(int argc, char* argv[]) {
   // Llamamos a la clase árbol
   Arbol arbol(fichero_de_entrada, origen, destino);
   // Ejecutar amplitud | profundidad
+  int opcion;
+  std::cout << "Introduce 1 para búsqueda en amplitud o 2 para búsqueda en profundidad: \n";
+  std::cin >> opcion;
+  if (opcion == 1) {
+    arbol.RecorridoAmplitud();
+  } else if (opcion == 2) {
+    arbol.RecorridoProfundidad(arbol.GetRaiz());
+  } else {
+    std::cout << "Opción no válida\n";
+  }
   // arbol.RecorridoAmplitud();
-  arbol.RecorridoProfundidad(arbol.GetRaiz());
+  // arbol.RecorridoProfundidad(arbol.GetRaiz());
   // arbol.RecorridoProfundidad();
 
   return 0;

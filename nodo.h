@@ -5,6 +5,8 @@
 #ifndef _NODO_H
 #define _NODO_H
 
+#include <vector>
+
 class Nodo {
 public:
   Nodo(const int& identificador, const double& coste, Nodo* padre) : identificador_{identificador}, coste_{coste}, padre_{padre} {}
@@ -13,11 +15,14 @@ public:
   double GetCoste() const { return coste_; }
   Nodo* GetPadre() const { return padre_; }
   void SetPadre(Nodo* padre) { padre_ = padre; }
+  void NuevoHijo(Nodo* hijo) { hijos_.push_back(hijo); }
+  Nodo* GetHijo(int i) { return hijos_[i]; }
+  int GetNumeroHijos() { return hijos_.size(); }
 private:
   int identificador_;
   double coste_;
   Nodo* padre_;
-  // vector de nodos vecinos (almacenar puntero y coste?) 
+  std::vector<Nodo*> hijos_;
 };
 
 

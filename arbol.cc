@@ -50,6 +50,27 @@ Arbol::Arbol(std::fstream& fichero_entrada, int origen, int destino) : origen_{o
 }
 
 
+Arbol::~Arbol() {
+  std::queue<Nodo*> cola_nodos;
+  Nodo* nodo_auxiliar = raiz_;
+  bool first_iteration = true;
+  cola_nodos.emplace(nodo_auxiliar);
+  while (!cola_nodos.empty()) {
+    nodo_auxiliar = cola_nodos.front();
+    cola_nodos.pop();
+    if (nodo_auxiliar->GetPadre() == nullptr && !first_iteration) {
+    } else {
+      for (int i{0}; i < nodo_auxiliar->GetNumeroHijos(); ++i) {
+        cola_nodos.emplace(nodo_auxiliar->GetHijo(i));
+      }
+      nodo_auxiliar->SetPadre(nullptr);
+      delete nodo_auxiliar;
+    }
+    first_iteration = false;
+  }
+}
+
+
 void Arbol::PrintCostes() {
   std::cout << "Matriz de costes: \n";
   
@@ -82,6 +103,7 @@ void Arbol::RecorridoAmplitud() {
           Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual-1][i], nodo_actual); // Comprobar que el identificador es correcto
           cola_nodos.emplace(nodo_nuevo);
           nodos_generados_.emplace_back(i+1);
+          nodo_actual->NuevoHijo(nodo_nuevo);
         }
       }
     }
@@ -94,21 +116,21 @@ void Arbol::RecorridoAmplitud() {
   }
   if (!solucion) std::cout << "No se ha encontrado solución\n";
   else ImprimeCamino(nodo_actual);
-  EliminaNodosAmplitud(nodo_actual);
-  while (!cola_nodos.empty()) {
-    Nodo* nodo_auxiliar = cola_nodos.front();
-    cola_nodos.pop();
-    EliminaNodosAmplitud(nodo_auxiliar);
-  }
+  // EliminaNodosAmplitud(nodo_actual);
+  // while (!cola_nodos.empty()) {
+  //   Nodo* nodo_auxiliar = cola_nodos.front();
+  //   cola_nodos.pop();
+  //   EliminaNodosAmplitud(nodo_auxiliar);
+  // }
 }
 
 
-void Arbol::EliminaNodosAmplitud(Nodo* nodo) {
-    if (nodo->GetPadre() != nullptr) {
-      EliminaNodosAmplitud(nodo->GetPadre());
-      nodo->SetPadre(nullptr);
-    }
-}
+// void Arbol::EliminaNodosAmplitud(Nodo* nodo) {
+//     if (nodo->GetPadre() != nullptr) {
+//       EliminaNodosAmplitud(nodo->GetPadre());
+//       nodo->SetPadre(nullptr);
+//     }
+// }
 
 
 // void Arbol::RecorridoProfundidad() {
@@ -161,6 +183,7 @@ bool Arbol::RecorridoProfundidad(Nodo* nodo) {
             Nodo* nodo_nuevo = new Nodo(i+1, matriz_costes_[identificador_actual-1][i], nodo); // Comprobar que el identificador es correcto
             pila_nodos.emplace(nodo_nuevo);
             nodos_generados_.emplace_back(i+1);
+            nodo->NuevoHijo(nodo_nuevo);
           }
         }
       }
