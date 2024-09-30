@@ -18,7 +18,6 @@ public:
   void EliminaNodosAmplitud(Nodo* nodo);
   // void RecorridoProfundidad();
   bool RecorridoProfundidad(Nodo* nodo);
-  bool RecorridoProfundidad(std::stack<Nodo*>& pila_nodos, Nodo* nodo_actual);
   bool CompruebaRama(Nodo* nodo, int identificador);
   void ImprimeCamino(Nodo* nodo);
   void PrintCostes();
@@ -35,7 +34,7 @@ private:
   std::vector<int> nodos_generados_;
   int iteracion_;
   // Imprimimos la salida por un fichero
-  std::fstream fichero_salida{"salida.txt", std::ios::out};
+  std::ofstream fichero_salida{"salida.txt"};
 };
 
 

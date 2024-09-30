@@ -32,7 +32,9 @@ int main(int argc, char* argv[]) {
   if (opcion == 1) {
     arbol.RecorridoAmplitud();
   } else if (opcion == 2) {
-    arbol.RecorridoProfundidad(arbol.GetRaiz());
+    if (!arbol.RecorridoProfundidad(arbol.GetRaiz())) {
+      std::cout << "No se ha encontrado solución\n";
+    }
   } else {
     std::cout << "Opción no válida\n";
   }

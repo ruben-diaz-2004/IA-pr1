@@ -208,7 +208,7 @@ bool Arbol::RecorridoProfundidad(Nodo* nodo) {
       delete nodo_actual;
     }
   }
-
+  
   return solucion;
 }
 
