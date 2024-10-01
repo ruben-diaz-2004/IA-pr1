@@ -1,6 +1,13 @@
 /**
- * Implementación de la clase árbol
- */
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Inteligencia Artificial 2024-2025
+  * Práctica 1: Búsquedas no informadas
+  * 
+  * @author Rubén Díaz Marrero 
+  * @date 01/10/2024
+  */
 
 
 #include "arbol.h"
@@ -10,6 +17,13 @@
 #include <queue>
 #include <stack>
 
+
+/**
+ * @brief Constructor de la clase árbol
+ * @param fichero_entrada Fichero de entrada con los datos del grafo
+ * @param origen Vértice de origen
+ * @param destino Vértice de destino
+ */
 Arbol::Arbol(std::fstream& fichero_entrada, int origen, int destino) : origen_{origen}, destino_{destino} {
   int numero_de_nodos{0};
   int numero_de_aristas{0};
@@ -50,6 +64,10 @@ Arbol::Arbol(std::fstream& fichero_entrada, int origen, int destino) : origen_{o
 }
 
 
+
+/**
+ * @brief Destructor de la clase árbol
+ */
 Arbol::~Arbol() {
   std::queue<Nodo*> cola_nodos;
   Nodo* nodo_auxiliar = raiz_;
@@ -71,6 +89,10 @@ Arbol::~Arbol() {
 }
 
 
+
+/**
+ * @brief Imprime la matriz de costes
+ */
 void Arbol::PrintCostes() {
   std::cout << "Matriz de costes: \n";
   
@@ -83,6 +105,10 @@ void Arbol::PrintCostes() {
 }
 
 
+
+/**
+ * @brief Recorrido en amplitud
+ */
 void Arbol::RecorridoAmplitud() {
   std::queue<Nodo*> cola_nodos;
   cola_nodos.emplace(raiz_);
@@ -169,6 +195,11 @@ void Arbol::RecorridoAmplitud() {
 
 
 
+/**
+ * @brief Recorrido en profundidad
+ * @param nodo Nodo actual
+ * @return true si se ha encontrado solución, false en caso contrario
+ */
 bool Arbol::RecorridoProfundidad(Nodo* nodo) {
   std::stack<Nodo*> pila_nodos;
   bool solucion = false;
@@ -214,6 +245,12 @@ bool Arbol::RecorridoProfundidad(Nodo* nodo) {
 
 
 
+/**
+ * @brief Comprueba si un nodo pertenece a la rama
+ * @param nodo Nodo actual
+ * @param identificador Identificador del nodo a comprobar
+ * @return true si pertenece a la rama, false en caso contrario
+ */
 bool Arbol::CompruebaRama(Nodo* nodo, int identificador) {
   Nodo* nodo_auxiliar = nodo;
   while (nodo_auxiliar != nullptr) {
@@ -224,6 +261,11 @@ bool Arbol::CompruebaRama(Nodo* nodo, int identificador) {
 }
 
 
+
+/**
+ * @brief Imprime el camino
+ * @param nodo Nodo actual
+ */
 void Arbol::ImprimeCamino(Nodo* nodo) {
   fichero_salida << "Camino: ";
   double coste_total{0};
@@ -244,13 +286,6 @@ void Arbol::ImprimeCamino(Nodo* nodo) {
     else fichero_salida << " - ";
   }
 
-  // for (int i{0}; i < camino.size(); ++i) {
-  //   std::cout << camino.top() << " - ";
-  //   camino.pop();
-  // }
-  // std::cout << camino.top();
-  // camino.pop();
-
   fichero_salida << std::endl;
 
   fichero_salida << "Costo: " << coste_total << std::endl;
@@ -258,6 +293,9 @@ void Arbol::ImprimeCamino(Nodo* nodo) {
 
 
 
+/**
+ * @brief Imprime los nodos generados
+ */
 void Arbol::PrintGenerados() {
   fichero_salida << "Nodos generados: ";
   for (int i{0}; i < nodos_generados_.size(); ++i) {
@@ -268,6 +306,9 @@ void Arbol::PrintGenerados() {
 
 
 
+/**
+ * @brief Imprime los nodos visitados
+ */
 void Arbol::PrintVisitados() {
   fichero_salida << "Nodos inspeccionados: ";
   for (int i{0}; i < nodos_visitados_.size(); ++i) {

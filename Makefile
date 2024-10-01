@@ -1,7 +1,7 @@
 # Universidad de La Laguna
 # Escuela Superior de Ingeniería y Tecnología
 # Grado en Ingeniería Informática
-# Asignatura: Computabilidad y Algoritmia
+# Asignatura: Inteligencia Artificial
 # 
 # @author Rubén Díaz Marrero
 # @date 25/09/2023

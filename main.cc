@@ -1,14 +1,14 @@
 /**
- *  Práctica #1: Búsquedas no informadas
- *  Curso: Inteligencia Artificial
- *  @date 2024-09-24
- */
+  * Universidad de La Laguna
+  * Escuela Superior de Ingeniería y Tecnología
+  * Grado en Ingeniería Informática
+  * Inteligencia Artificial 2024-2025
+  * Práctica 1: Búsquedas no informadas
+  * 
+  * @author Rubén Díaz Marrero 
+  * @date 01/10/2024
+  */
 
-/**
- * Origen-destino se pregunta por teclado
- * A la hora de elegir nodos, se elige el de menor índice
- * No se genera un nuevo nodo si ya pertenece a la rama
- */
 
 #include <iostream>
 #include "fstream"
@@ -38,9 +38,7 @@ int main(int argc, char* argv[]) {
   } else {
     std::cout << "Opción no válida\n";
   }
-  // arbol.RecorridoAmplitud();
-  // arbol.RecorridoProfundidad(arbol.GetRaiz());
-  // arbol.RecorridoProfundidad();
+
 
   return 0;
 }
