@@ -236,6 +236,7 @@ bool Arbol::RecorridoProfundidad(Nodo* nodo) {
       solucion = true;
     } else {
       // std::cout << "Borrando nodo: " << nodo_actual->GetIdentificador() << std::endl;
+      nodo_actual->SetPadre(nullptr);
       delete nodo_actual;
     }
   }
