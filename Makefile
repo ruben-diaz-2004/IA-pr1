@@ -14,7 +14,7 @@ CXXFLAGS = -Wall -std=c++17 -g
 
 all: NoInformadas
 
-NoInformadas: main.cc arbol.cc
+NoInformadas: main.cc arbol.cc nodo.cc
 		$(CXX) $(CXXFLAGS) -o $@ $^
 	
 

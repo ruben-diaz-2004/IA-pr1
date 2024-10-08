@@ -2,7 +2,7 @@
 Número de nodos del grafo: 15
 Número de aristas del grafo: 20
 Vértice de origen: 11
-Vértice de destino: 13
+Vértice de destino: 2
 --------------------------------------------
 Iteración: 1
 Nodos generados: 11 
@@ -21,28 +21,8 @@ Nodos generados: 11 10 6 3 4 2 1 2
 Nodos inspeccionados: 11 3 1 
 --------------------------------------------
 Iteración: 5
-Nodos generados: 11 10 6 3 4 2 1 2 4 
+Nodos generados: 11 10 6 3 4 2 1 2 
 Nodos inspeccionados: 11 3 1 2 
 --------------------------------------------
-Iteración: 6
-Nodos generados: 11 10 6 3 4 2 1 2 4 12 6 
-Nodos inspeccionados: 11 3 1 2 4 
---------------------------------------------
-Iteración: 7
-Nodos generados: 11 10 6 3 4 2 1 2 4 12 6 10 8 5 
-Nodos inspeccionados: 11 3 1 2 4 6 
---------------------------------------------
-Iteración: 8
-Nodos generados: 11 10 6 3 4 2 1 2 4 12 6 10 8 5 14 13 12 
-Nodos inspeccionados: 11 3 1 2 4 6 5 
---------------------------------------------
-Iteración: 9
-Nodos generados: 11 10 6 3 4 2 1 2 4 12 6 10 8 5 14 13 12 
-Nodos inspeccionados: 11 3 1 2 4 6 5 12 
---------------------------------------------
-Iteración: 10
-Nodos generados: 11 10 6 3 4 2 1 2 4 12 6 10 8 5 14 13 12 
-Nodos inspeccionados: 11 3 1 2 4 6 5 12 13 
---------------------------------------------
-Camino: 11 - 3 - 1 - 2 - 4 - 6 - 5 - 13
-Costo: 51
+Camino: 11 - 3 - 1 - 2
+Costo: 28

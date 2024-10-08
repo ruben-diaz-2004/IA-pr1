@@ -69,23 +69,7 @@ Arbol::Arbol(std::fstream& fichero_entrada, int origen, int destino) : origen_{o
  * @brief Destructor de la clase árbol
  */
 Arbol::~Arbol() {
-  std::queue<Nodo*> cola_nodos;
-  Nodo* nodo_auxiliar = raiz_;
-  bool first_iteration = true;
-  cola_nodos.emplace(nodo_auxiliar);
-  while (!cola_nodos.empty()) {
-    nodo_auxiliar = cola_nodos.front();
-    cola_nodos.pop();
-    if (nodo_auxiliar->GetPadre() == nullptr && !first_iteration) {
-    } else {
-      for (int i{0}; i < nodo_auxiliar->GetNumeroHijos(); ++i) {
-        cola_nodos.emplace(nodo_auxiliar->GetHijo(i));
-      }
-      nodo_auxiliar->SetPadre(nullptr);
-      delete nodo_auxiliar;
-    }
-    first_iteration = false;
-  }
+  delete raiz_;
 }
 
 
@@ -236,7 +220,8 @@ bool Arbol::RecorridoProfundidad(Nodo* nodo) {
       solucion = true;
     } else {
       // std::cout << "Borrando nodo: " << nodo_actual->GetIdentificador() << std::endl;
-      nodo_actual->SetPadre(nullptr);
+      // nodo_actual->SetPadre(nullptr);
+      nodo_actual->GetPadre()->EliminaHijo(nodo_actual);
       delete nodo_actual;
     }
   }
